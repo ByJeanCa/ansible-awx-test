@@ -2,12 +2,20 @@
 - name: TEST WITH ANSIBLE AWX
   hosts: all
   become: true
+  vars: 
+    nginx_port: 8080
+  }
   tasks:
     - name: Install nginx
       yum: 
         name: nginx
         state: present
-    
+
+    - name: conf nginx
+      template: 
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+        
     - name: Start nginx
       service: 
         name: nginx
